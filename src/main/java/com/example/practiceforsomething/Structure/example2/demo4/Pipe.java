@@ -1,0 +1,48 @@
+package com.example.practiceforsomething.Structure.example2.demo4;
+
+import java.io.IOException;
+import java.io.PipedReader;
+import java.io.PipedWriter;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
+/**
+ * Classname: Pipe
+ * Package: com.example.practiceforsomething.Structure.example2.demo4
+ * Description:
+ *
+ * @Author: No_Ripple(吴波)
+ * @Creat： - 16:13
+ * @Version: v1.0
+ */
+public class Pipe {
+    private Scanner pipeReader;
+    private PrintWriter pipeWriter;
+    Pipe(){
+        PipedWriter pipedWriter = new PipedWriter();
+        PipedReader pipedReader = new PipedReader();
+        try {
+            pipedWriter.connect(pipedReader);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        pipeReader = new Scanner(pipedReader);
+        pipeWriter = new PrintWriter(pipedWriter);
+    }
+    public String readerLine(){
+        return pipeReader.nextLine();
+    }
+    public boolean hashNextLine(){
+        return pipeReader.hasNext();
+    }
+    public void writerLine(String strLine){
+        pipeWriter.println(strLine);
+    }
+    public void closeReader(){
+        pipeReader.close();
+    }
+    public void closeWriter(){
+        pipeWriter.close();
+    }
+}
+

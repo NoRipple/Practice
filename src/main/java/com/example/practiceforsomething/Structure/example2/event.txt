@@ -1,0 +1,64 @@
+事件系统风格
+文字说明
+事件系统风格通过事件和事件处理函数来组织程序逻辑。当特定事件发生时，相应的处理函数会被调用。这种风格常用于GUI应用程序和实时系统。
+
+示例代码
+Java
+深色版本
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class EventSystem {
+    public static void main(String[] args) {
+        String inputFilename = "input.txt";
+        String outputFilename = "output.txt";
+
+        try {
+            String data = readFile(inputFilename);
+            onFileRead(data);
+
+            String processedData = processData(data);
+            onDataProcessed(processedData);
+
+            writeFile(outputFilename, processedData);
+            onFileWritten();
+        } catch (IOException e) {
+            System.err.println("Error processing file: " + e.getMessage());
+        }
+    }
+
+    private static String readFile(String filename) throws IOException {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String currentLine;
+            while ((currentLine = br.readLine()) != null) {
+                contentBuilder.append(currentLine).append("\n");
+            }
+        }
+        return contentBuilder.toString();
+    }
+
+    private static void onFileRead(String data) {
+        System.out.println("File has been read.");
+    }
+
+    private static String processData(String data) {
+        return data.toUpperCase();
+    }
+
+    private static void onDataProcessed(String processedData) {
+        System.out.println("Data has been processed.");
+    }
+
+    private static void writeFile(String filename, String processedData) throws IOException {
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write(processedData);
+        }
+    }
+
+    private static void onFileWritten() {
+        System.out.println("File has been written.");
+    }
+}

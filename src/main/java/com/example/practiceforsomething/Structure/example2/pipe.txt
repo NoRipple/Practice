@@ -1,0 +1,47 @@
+管道-过滤器风格
+文字说明
+管道-过滤器风格是一种数据流模型，其中数据通过一系列过滤器进行处理。每个过滤器对数据进行一定的变换，并将结果传递给下一个过滤器。这种风格适用于批处理和数据流处理场景。
+
+示例代码
+Java
+深色版本
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Pipeline {
+    public static void main(String[] args) {
+        String inputFilename = "input.txt";
+        String outputFilename = "output.txt";
+
+        try {
+            String data = readData(inputFilename);
+            String processedData = processData(data);
+            writeData(outputFilename, processedData);
+        } catch (IOException e) {
+            System.err.println("Error processing file: " + e.getMessage());
+        }
+    }
+
+    private static String readData(String filename) throws IOException {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String currentLine;
+            while ((currentLine = br.readLine()) != null) {
+                contentBuilder.append(currentLine).append("\n");
+            }
+        }
+        return contentBuilder.toString();
+    }
+
+    private static String processData(String data) {
+        return data.toUpperCase();
+    }
+
+    private static void writeData(String filename, String processedData) throws IOException {
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write(processedData);
+        }
+    }
+}

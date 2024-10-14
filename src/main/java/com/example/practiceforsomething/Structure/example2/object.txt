@@ -1,0 +1,56 @@
+文字说明
+面向对象编程（OOP）强调的是对象的概念，通过类和对象来表示现实世界中的实体。类定义了对象的行为和属性，对象则是类的实例。OOP的优点包括封装、继承和多态性。
+
+示例代码
+Java
+深色版本
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class FileProcessor {
+    private String inputFilename;
+    private String outputFilename;
+
+    public FileProcessor(String inputFilename, String outputFilename) {
+        this.inputFilename = inputFilename;
+        this.outputFilename = outputFilename;
+    }
+
+    public void run() {
+        try {
+            String data = readFile();
+            String processedData = processData(data);
+            writeFile(processedData);
+        } catch (IOException e) {
+            System.err.println("Error processing file: " + e.getMessage());
+        }
+    }
+
+    private String readFile() throws IOException {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(inputFilename))) {
+            String currentLine;
+            while ((currentLine = br.readLine()) != null) {
+                contentBuilder.append(currentLine).append("\n");
+            }
+        }
+        return contentBuilder.toString();
+    }
+
+    private String processData(String data) {
+        return data.toUpperCase();
+    }
+
+    private void writeFile(String processedData) throws IOException {
+        try (FileWriter writer = new FileWriter(outputFilename)) {
+            writer.write(processedData);
+        }
+    }
+
+    public static void main(String[] args) {
+        FileProcessor processor = new FileProcessor("input.txt", "output.txt");
+        processor.run();
+    }
+}

@@ -1,0 +1,47 @@
+主程序-子程序风格
+文字说明
+主程序-子程序风格是最传统的编程方法之一。它将程序划分为一个主程序和若干个子程序。主程序负责控制程序的流程，而子程序则执行特定的任务。
+
+示例代码
+Java
+深色版本
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class MainProgram {
+    public static void main(String[] args) {
+        String inputFilename = "input.txt";
+        String outputFilename = "output.txt";
+
+        try {
+            String data = readFile(inputFilename);
+            String processedData = processData(data);
+            writeFile(outputFilename, processedData);
+        } catch (IOException e) {
+            System.err.println("Error processing file: " + e.getMessage());
+        }
+    }
+
+    private static String readFile(String filename) throws IOException {
+        StringBuilder contentBuilder = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+            String currentLine;
+            while ((currentLine = br.readLine()) != null) {
+                contentBuilder.append(currentLine).append("\n");
+            }
+        }
+        return contentBuilder.toString();
+    }
+
+    private static String processData(String data) {
+        return data.toUpperCase();
+    }
+
+    private static void writeFile(String filename, String processedData) throws IOException {
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write(processedData);
+        }
+    }
+}

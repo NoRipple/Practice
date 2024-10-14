@@ -1,0 +1,41 @@
+package com.example.practiceforsomething.Structure.example2.demo2;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ * Classname: Input
+ * Package: com.example.practiceforsomething.Structure.example2
+ * Description:
+ *
+ * @Author: No_Ripple(吴波)
+ * @Creat： - 15:31
+ * @Version: v1.0
+ */
+public class Input {
+    private ArrayList<String> lineTxt = new ArrayList<String>();
+
+    public ArrayList<String> getLineTxt() {
+        return lineTxt;
+    }
+
+    public void input(String fileName) {
+        BufferedReader inputFile = null;
+        try {
+            inputFile = new BufferedReader(new FileReader(fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String line;
+        try {
+            while ((line = inputFile.readLine()) != null) {
+                lineTxt.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
